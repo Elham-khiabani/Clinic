@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ClinicDB_NewModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PatientPK" />
+          </Key>
+          <Property Name="PatientPK" Type="int" Nullable="false" />
+          <Property Name="NationalCode" Type="char" MaxLength="10" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="GenderTypeCode" Type="tinyint" />
+          <Property Name="Mobile" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK_Patient_Patient">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="Patient1" Type="Self.Patient" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientPK" />
+            </Principal>
+            <Dependent Role="Patient1">
+              <PropertyRef Name="PatientPK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ClinicDB_NewModelStoreContainer">
+          <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Patient_Patient" Association="Self.FK_Patient_Patient">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="Patient1" EntitySet="Patient" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ClinicDB_NewModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PatientPK" />
+          </Key>
+          <Property Name="PatientPK" Type="Int32" Nullable="false" />
+          <Property Name="NationalCode" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GenderTypeCode" Type="Byte" />
+          <Property Name="Mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Patient1" Relationship="Self.FK_Patient_Patient" FromRole="Patient" ToRole="Patient1" />
+          <NavigationProperty Name="Patient2" Relationship="Self.FK_Patient_Patient" FromRole="Patient1" ToRole="Patient" />
+        </EntityType>
+        <Association Name="FK_Patient_Patient">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="Patient1" Type="Self.Patient" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientPK" />
+            </Principal>
+            <Dependent Role="Patient1">
+              <PropertyRef Name="PatientPK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ClinicDB_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Patients" EntityType="Self.Patient" />
+          <AssociationSet Name="FK_Patient_Patient" Association="Self.FK_Patient_Patient">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="Patient1" EntitySet="Patients" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ClinicDB_NewModelStoreContainer" CdmEntityContainer="ClinicDB_DBEntities">
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="ClinicDB_NewModel.Patient">
+              <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="PatientPK" ColumnName="PatientPK" />
+                <ScalarProperty Name="NationalCode" ColumnName="NationalCode" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="GenderTypeCode" ColumnName="GenderTypeCode" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
